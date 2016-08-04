@@ -18,8 +18,7 @@ import matplotlib.pyplot as plt
 fields = {
     'gas': ('gas', 'density'),
     'stars': ('deposit', 'stars_density'),
-    'dark_matter': ('deposit', 'dark_matter_density'),
-    'radius': ('index', 'virial_radius_fraction')
+    'dark_matter': ('deposit', 'dark_matter_density')
 }
 
 units = {field: 'Msun/kpc**3' for field in fields.values()}
