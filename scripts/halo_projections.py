@@ -11,7 +11,6 @@ directory = args.directory
 
 import numpy as np
 import yt
-from yt.analysis_modules.halo_analysis.api import HaloCatalog
 
 fields = {
     'gas': ('gas', 'density'),
@@ -34,16 +33,16 @@ ds = yt.load(directory+'/'+directory)
 ds.add_particle_filter('stars')
 ds.add_particle_filter('dark_matter')
 
-halos_ds = yt.load('halo_catalogs/catalog/catalog.0.h5')
-hc = HaloCatalog(data_ds=ds, halos_ds=halos_ds)
-hc.load()
-halos = hc.halo_list
+halo_centers = np.genfromtxt('centers.csv', delimiter=',')
+halos = []
+for center in halo_centers:
+    halos.append(ds.arr(center, 'code_length'))
 
 for fieldname, fieldvalue in fields.iteritems():
-    for index, halo in enumerate(halos):
-        com = [halo.quantities['particle_position_x'], halo.quantities['particle_position_y'], halo.quantities['particle_position_z']]
-        sp = ds.sphere(com, (30, 'kpc'))
+    for index, center_of_mass in enumerate(halos):
+        sp = ds.sphere(center_of_mass, (30, 'kpc'))
         amv = sp.quantities.angular_momentum_vector()
+        amv = amv / np.sqrt((amv**2).sum())
         center = sp.quantities.center_of_mass()
         res = 1024
         width = [0.01, 0.01, 0.01]

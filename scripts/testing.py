@@ -36,7 +36,7 @@ halos = hc.halo_list
 
 fieldname = 'gas'
 fieldvalue = fields[fieldname]
-index = 1
+index = 0
 halo = halos[index]
 
 # PROJECTION PLOT
