@@ -48,7 +48,7 @@ def profile_plot(center_of_mass, filename):
     sp = ds.sphere(center_of_mass, (30, 'kpc'))
     profiles = yt.create_profile(sp, 'radius', fields.values())
     for fieldname, field in fields.iteritems():
-        plt.loglog(profiles.x, profiles[field], lable=fieldname)
+        plt.loglog(profiles.x, profiles[field], label=fieldname)
     plt.xlim([profiles.x.min(), profiles.x.max()])
     plt.xlabel('Radius $[kpc]$')
     plt.ylabel('$\\rho [M_{\odot} kpc^{-3}]$')
