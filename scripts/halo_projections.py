@@ -48,7 +48,8 @@ for fieldname, fieldvalue in fields.iteritems():
         center = sp.quantities.center_of_mass()
         res = 1024
         width = [0.01, 0.01, 0.01]
+        width_edge = [0.003, 0.003, 0.003]
         image = yt.off_axis_projection(ds, center, amv, width, res, fieldvalue)
-        image_edge = yt.off_axis_projection(ds, center, amv_edge, width, res, fieldvalue)
+        image_edge = yt.off_axis_projection(ds, center, amv_edge, width_edge, res, fieldvalue)
         yt.write_image(np.log10(image), '%s_%d_%s_offaxis_projection.png' % (ds, index, fieldname))
         yt.write_image(np.log10(image_edge), '%s_%d_%s_offaxis_projection_edge.png' % (ds, index, fieldname))
