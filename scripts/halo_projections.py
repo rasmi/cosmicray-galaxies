@@ -43,8 +43,12 @@ for fieldname, fieldvalue in fields.iteritems():
         sp = ds.sphere(center_of_mass, (30, 'kpc'))
         amv = sp.quantities.angular_momentum_vector()
         amv = amv / np.sqrt((amv**2).sum())
+        amv_edge = np.cross(amv, [1, 0, 0])
+        amv_edge = amv_edge / np.sqrt((amv_edge**2).sum())
         center = sp.quantities.center_of_mass()
         res = 1024
         width = [0.01, 0.01, 0.01]
         image = yt.off_axis_projection(ds, center, amv, width, res, fieldvalue)
+        image_edge = yt.off_axis_projection(ds, center, amv_edge, width, res, fieldvalue)
         yt.write_image(np.log10(image), '%s_%d_%s_offaxis_projection.png' % (ds, index, fieldname))
+        yt.write_image(np.log10(image_edge), '%s_%d_%s_offaxis_projection_edge.png' % (ds, index, fieldname))
